@@ -1,0 +1,94 @@
+{% extends 'portal/base.html' %}
+{% block content %}
+  <section class="innerbanner" role="banner">
+    <header id="header">
+    <div class="header-content clearfix"> <a class="logo" href="{% url 'index' %}">SU Portal</a>
+      <nav class="navigation" role="navigation">
+        <ul class="primary-nav">
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'services' %}">Services</a></li>
+          <li><a href="{% url 'cost' %}">Expenses</a></li>
+          <li><a href="{% url 'contact' %}">Contact</a></li>
+          <li><a href="{% url 'loginPage' %}">Login</a></li>
+          <li><a href="#">Other pages</a></li>
+        </ul>
+      </nav>
+      <a href="#" class="nav-toggle">Menu<span></span></a> </div>
+  </header>
+    <style>
+        #table_container{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #cost {
+            margin-top: 50px;
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 70%;
+        }
+
+        #cost td, #cost th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #cost tr:nth-child(even){background-color: #f2f2f2;}
+
+        #cost tr:hover {background-color: #ddd;}
+
+        #cost th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #52CBEE;
+            color: white;
+        }
+    </style>
+
+
+
+    <div class="container">
+      <div class="col-md-10 col-md-offset-1">
+        <div class="innerbanner-text text-center">
+          <p> Your Expenses </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <section>
+    <div id="table_container">
+        {% if user.is_authenticated %}
+            <table id="cost">
+          <tr>
+            <th>Name</th>
+            <th>ID</th>
+            <th>Mess</th>
+            <th>Food King</th>
+            <th>ANC</th>
+            <th>Looters</th>
+            <th>Others</th>
+          </tr>
+          <tr>
+            <td>{{ cost.name }}</td>
+            <td>{{ cost.institute_id }}</td>
+            <td><strong>{{ cost.cost_list_mess }}</strong></td>
+            <td><strong>{{ cost.cost_list_fk }}</strong></td>
+            <td><strong>{{ cost.cost_list_anc }}</strong></td>
+            <td><strong>{{ cost.cost_list_looters }}</strong></td>
+            <td><strong>{{ cost.cost_list_others }}</strong></td>
+          </tr>
+        </table>
+
+        {% else %}
+
+            <h2> Please Login First </h2>
+        {% endif %}
+
+    </div>
+
+    </section>
+
+{% endblock %}

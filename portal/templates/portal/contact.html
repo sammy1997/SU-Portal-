@@ -1,0 +1,129 @@
+{% extends 'portal/base.html' %}
+{% block links %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'portal/css/contact.css' %}">
+{% endblock %}
+{% block content %}
+    {% load staticfiles %}
+
+    <style>
+
+
+
+    </style>
+<section class="innerbanner" role="banner">
+  <header id="header">
+    <div class="header-content clearfix"> <a class="logo" href="{% url 'index' %}">SU Portal</a>
+      <nav class="navigation" role="navigation">
+        <ul class="primary-nav">
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'services' %}">Services</a></li>
+          <li><a href="{% url 'cost' %}">Expenses</a></li>
+          <li><a href="{% url 'contact' %}">Contact</a></li>
+          <li><a href="{% url 'loginPage' %}">Login</a></li>
+          <li><a href="#">Other pages</a></li>
+        </ul>
+      </nav>
+      <a href="#" class="nav-toggle">Menu<span></span></a> </div>
+  </header>
+
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="innerbanner-text text-center">
+        <p>Contact</p>
+      </div>
+    </div>
+  </div>
+</section>
+    <section id="large-screen">
+
+    <div class="profile">
+      <div class="photo"><img src="{% static 'portal/images/work-1.jpg' %}"/></div>
+          <div class="content">
+            <div class="text">
+              <h3>Bharatratna Puli</h3>
+              <h6><i class="fa fa-phone"></i> &nbsp; 9876543210 <br>
+                  <i class="fa fa-envelope"></i> &nbsp; kaskd@gmail.com</h6>
+            </div>
+            <div class="btn"><span></span></div>
+          </div>
+      <div class="box"><i class="fa fa-codepen"></i><i class="fa fa-facebook"></i><i class="fa fa-github"></i><i class="fa fa-tumblr"></i><i class="fa fa-twitter"></i></div>
+    </div>
+    <div class="profile">
+      <div class="photo"><img src="{% static 'portal/images/vk.jpg' %}"/></div>
+          <div class="content">
+            <div class="text">
+              <h3>Shivam Jindal</h3>
+              <h6><i class="fa fa-phone"></i> &nbsp; 9876543210 <br>
+                  <i class="fa fa-envelope"></i> &nbsp; kaskd@gmail.com</h6>
+            </div>
+            <div class="btn"><span></span></div>
+          </div>
+      <div class="box"><i class="fa fa-codepen"></i><i class="fa fa-facebook"></i><i class="fa fa-github"></i><i class="fa fa-tumblr"></i><i class="fa fa-twitter"></i></div>
+    </div>
+
+    <div class="profile" >
+      <div class="photo"><img src="{% static 'portal/images/work-1.jpg' %}"/></div>
+          <div class="content">
+            <div class="text">
+              <h3>Bharatratna Puli</h3>
+              <h6><i class="fa fa-phone"></i> &nbsp; 9876543210 <br>
+                  <i class="fa fa-envelope"></i> &nbsp; kaskd@gmail.com</h6>
+            </div>
+            <div class="btn"><span></span></div>
+          </div>
+      <div class="box"><i class="fa fa-codepen"></i><i class="fa fa-facebook"></i><i class="fa fa-github"></i><i class="fa fa-tumblr"></i><i class="fa fa-twitter"></i></div>
+    </div>
+
+    </section>
+    <section id="small-screen">
+    <div id="contact-cards">
+        <div class="card">
+          <img src="{% static 'portal/images/work-1.jpg' %}" alt="John" style="width:100%">
+          <h1>Bharatratna Puli</h1>
+          <p class="title">President, Student Union</p>
+          <p><i class="fa fa-phone"></i> &nbsp; 9876543210 &nbsp;<i class="fa fa-envelope"></i> &nbsp;kaskd@gmail.com</p>
+          <a href="#"><i class="fa fa-twitter"></i>&nbsp;</a>
+          <a href="#"><i class="fa fa-linkedin"></i>&nbsp;</a>
+          <a href="#"><i class="fa fa-facebook"></i></a>
+        </div>
+
+        <div class="card">
+          <img src="{% static 'portal/images/work-1.jpg' %}" alt="John" style="width:100%">
+          <h1>Bharatratna Puli</h1>
+          <p class="title">President, Student Union</p>
+          <p><i class="fa fa-phone"></i> &nbsp; 9876543210 &nbsp;<i class="fa fa-envelope"></i> &nbsp;kaskd@gmail.com</p>
+          <a href="#"><i class="fa fa-twitter"></i>&nbsp;</a>
+          <a href="#"><i class="fa fa-linkedin"></i>&nbsp;</a>
+          <a href="#"><i class="fa fa-facebook"></i></a>
+        </div>
+
+        <div class="card">
+          <img src="{% static 'portal/images/work-1.jpg' %}" alt="John" style="width:100%">
+          <h1>Bharatratna Puli</h1>
+          <p class="title">President, Student Union</p>
+          <p><i class="fa fa-phone"></i> &nbsp; 9876543210 &nbsp;<i class="fa fa-envelope"></i> &nbsp;kaskd@gmail.com</p>
+          <a href="#"><i class="fa fa-twitter"></i>&nbsp;</a>
+          <a href="#"><i class="fa fa-linkedin"></i>&nbsp;</a>
+          <a href="#"><i class="fa fa-facebook"></i></a>
+        </div>
+    </div>
+
+    </section>
+<section id="inner-description" class="section inner-description">
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1 text-center">
+      <div class="col-md-6 col-md-offset-3 conForm">
+        <div id="message">Send Us a Message</div>
+        <form method="post" action="#" name="cform" id="cform">
+          <input name="name" id="name" type="text" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" placeholder="Your name..." >
+          <input name="email" id="email" type="email" class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 noMarr" placeholder="Email Address..." >
+          <textarea name="comments" id="comments" cols="" rows="" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" placeholder="Your Message..."></textarea>
+          <input type="submit" id="submit" name="send" class="submitBnt" value="Send">
+          <div id="simple-msg"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

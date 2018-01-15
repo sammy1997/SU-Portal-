@@ -1,0 +1,51 @@
+<!doctype html>
+<html class="no-js" lang="">
+<head>
+<meta charset="utf-8">
+<meta name="description" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Student Union Portal</title>
+    {% load staticfiles %}
+<link rel="stylesheet" href="{% static 'portal/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'portal/css/jquery.fancybox.css' %}">
+<link rel="stylesheet" href="{% static 'portal/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'portal/css/responsive.css' %}">
+<link rel="stylesheet" href="{% static 'portal/css/animate.min.css' %}">
+    {% block links %}
+    {% endblock %}
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="{% static 'portal/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'portal/js/jquery.fancybox.pack.js' %}"></script>
+<script src="{% static 'portal/js/jquery.waypoints.min.js' %}"></script>
+<script src="{% static 'portal/js/retina.min.js' %}"></script>
+<script src="{% static 'portal/js/modernizr.js' %}"></script>
+<script src="{% static 'portal/js/jquery.contact.js' %}"></script>
+<script src="{% static 'portal/js/main.js' %}"></script>
+{% block javascripts %}
+{% endblock %}
+</head>
+
+<body>
+{% block content %}
+{% endblock %}
+<footer class="section footer">
+  <div class="footer-bottom">
+    <div class="container">
+      <div class="col-md-12">
+        <p>
+            <ul class="footer-share">
+              <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+              <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+              <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+              <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+            </ul>
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>

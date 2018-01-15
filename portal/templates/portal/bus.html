@@ -1,0 +1,136 @@
+{% extends 'portal/base.html' %}
+{% block links %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'portal/css/bus.css' %}">
+{% endblock %}
+
+{% block javascripts %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'portal/js/bus.js' %}"></script>
+{% endblock %}
+{% block content %}
+
+<section class="innerbanner" role="banner">
+  <header id="header">
+    <div class="header-content clearfix"> <a class="logo" href="{% url 'index' %}">SU Portal</a>
+      <nav class="navigation" role="navigation">
+        <ul class="primary-nav">
+          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'services' %}">Services</a></li>
+          <li><a href="{% url 'cost' %}">Expenses</a></li>
+          <li><a href="{% url 'contact' %}">Contact</a></li>
+          <li><a href="{% url 'loginPage' %}">Login</a></li>
+          <li><a href="#">Other pages</a></li>
+        </ul>
+      </nav>
+      <a href="#" class="nav-toggle">Menu<span></span></a> </div>
+  </header>
+
+  <div class="container">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="innerbanner-text text-center">
+        <p>Services</p>
+      </div>
+    </div>
+  </div>
+</section>
+    {% if user.is_authenticated %}
+            <section id="entire">
+        {% if check %}
+                <div style="width: 100vw;text-align: center;margin-top: 10px">
+                    <h1>Choose the date : </h1>
+                    <input id="date-field" type="date" name="booking-day" max="2018-12-31" min="2018-01-31" style="margin-top: 20px">
+                </div>
+
+                <div style="width: 100vw;text-align: center;margin-top: 10px">
+                    <h1>Choose the time : </h1>
+                    <select id="time-field" style="margin-top: 20px">
+                        <option>Morning(9 AM)</option>
+                        <option>Night(10 PM)</option>
+                    </select>
+                </div>
+
+                <div style="width: 100vw;text-align: center;margin-top: 10px">
+                    <h1>Choose the destination : </h1>
+                    <select id="dest-field" style="margin-top: 20px">
+                        <option>Pilani to Jaipur</option>
+                        <option>Pilani to Delhi</option>
+                    </select>
+                </div>
+                <div style="width:100vw;text-align:center; margin-top: 10px" id="show">
+                    <button onclick="showAvailable()" class="butn" id="btnShowBus">Show Available Seats</button>
+                </div>
+                <script>
+
+                function showAvailable() {
+                    $("#show").addClass("hideClass");
+                    $("#bus").removeClass("hideClass");
+
+                }
+
+                </script>
+                <div id="bus" class="hideClass">
+                    <div style="width: 100vw;text-align: center;margin-top: 20px">
+                        <h1>Choose a seat : </h1>
+                    </div>
+                        <div id="holder">
+                            <div id="driver-seat">
+                                <ul>
+                                    <li class="seatD"></li>
+                                </ul>
+                            </div>
+                            <div id="bus-seats">
+                                <ul id="place"></ul>
+                            </div>
+
+                        </div>
+                      <div style="width:100vw;text-align:center; margin-top: 10px">
+                            <input type="button" class="butn" id="btnShowNew" value="Book Seat">
+                      </div>
+                </div>
+
+        {% else %}
+            <div class="middle">
+                <div class="slot">
+                  <a href="#" class="ticket">
+                    <b></b>
+                    <c></c>
+                    <d></d>
+                    <em>
+                      <b></b>
+                      <c></c>
+                    </em>
+                    <label>Seat {{ query.seat_number }}</label>
+                  </a>
+                </div>
+            </div>
+            <h1> Date : {{ query.date_of_bus }}</h1>
+            <h1> Time : {{ time }}</h1>
+            <h1> Destination: {{ dest }}</h1>
+            <button onclick="cancel()" id="cancelbtn" class="butn" >Cancel My Seat</button>
+            <script>
+
+                function cancel() {
+                    var csrftoken = getCookie('csrftoken');
+                    $.ajax({
+                        type: "POST",
+                        url: "../cancelBus/",
+                        data: {
+                            'csrfmiddlewaretoken': csrftoken
+                        },
+                        success: function (data) {
+                            alert(data);
+                            window.location.reload();
+                        },
+                        error: function (e) {
+                            alert("Error : " + e.message);
+                        }
+                    })
+                }
+            </script>
+        {% endif %}
+        </section>
+    {% else %}
+        <h2 style="font-family: 'Roboto Slab'"> Please Login First </h2>
+    {% endif %}
+{% endblock %}
