@@ -20,6 +20,14 @@ select#time-field,select#dest-field{
   width: 300px;
 }
 
+@media only screen and (max-width: 500px){
+    select#time-field,select#dest-field{
+        width: 150px;
+    }
+    body{
+        overflow-x:hidden ;
+    }
+}
 
 .butn {
     background-color: #52cbee;

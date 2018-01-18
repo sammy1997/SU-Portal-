@@ -3,6 +3,9 @@ from django.contrib.auth import views
 from portal.models import Cost, Bus
 from xlrd import open_workbook
 from django.http import HttpResponse
+import json
+from django.core.mail import EmailMessage
+import xlwt
 
 csv_file_path_looters = '/home/sammy/Desktop/SUTech/StudentUnionPortal/bill/looters.xlsx'
 csv_file_path_anc = '/home/sammy/Desktop/SUTech/StudentUnionPortal/bill/looters.xlsx'
@@ -198,3 +201,67 @@ def update_excel(request):
         cost.cost_list_others = data_reader5.cell(row_index, 4).value
         cost.save()
     return redirect('index')
+
+
+def get_valid_seats(request):
+    if request.method == 'POST':
+        date = request.POST['date']
+        time = request.POST['time']
+        destination = request.POST['dest']
+        x = Bus.objects.all()\
+            .filter(destination=destination).filter(bus_time=time).filter(date_of_bus=date).filter(has_cancelled=False)
+        empty_seats = []
+        count = 0
+        for seat in x:
+            empty_seats.insert(count, int(seat.seat_number))
+            count += 1
+        dict = json.dumps(empty_seats)
+        print(dict)
+        return HttpResponse(dict)
+    else:
+        return HttpResponse("Error")
+
+
+def send_email(request):
+    if request.method == 'POST':
+        message = request.POST['body']
+        name = request.POST['name']
+        email = EmailMessage(name + "- SU Portal Message", message, to=['f2016632@pilani.bits-pilani.ac.in'])
+        email.send()
+        return HttpResponse("Success")
+
+
+def export_bus_xls(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="bus.xls"'
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Bus')
+    row_num = 0
+
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['ID', 'Email ID', 'Date', 'Shift', 'Destination', 'Seat Booked', ]
+
+    for col_num in range(len(columns)):
+        ws.write(row_num, col_num, columns[col_num], font_style)
+    font_style = xlwt.XFStyle()
+    dest = ["Jaipur", "Delhi"]
+    shift = ["Morning", "Night"]
+    rows = Bus.objects.all().values_list('institute_id', 'email', 'date_of_bus', 'bus_time', 'destination',
+                                         'seat_number', 'has_cancelled')
+    for row in rows:
+        row_num += 1
+        x = shift[int(row[3])]
+        y = dest[int(row[4])]
+        if not row[6]:
+            for col_num in range(len(row)-1):
+                if col_num == 3:
+                    ws.write(row_num, col_num, x, font_style)
+                elif col_num == 4:
+                    ws.write(row_num, col_num, y, font_style)
+                else:
+                    ws.write(row_num, col_num, row[col_num], font_style)
+
+    wb.save(response)
+    return response

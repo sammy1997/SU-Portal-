@@ -63,10 +63,60 @@
                 <script>
 
                 function showAvailable() {
-                    $("#show").addClass("hideClass");
-                    $("#bus").removeClass("hideClass");
+                    var date = document.getElementById("date-field").value;
+                    var dropdowntime = document.getElementById("time-field");
+                    var dropdowndest = document.getElementById("dest-field");
+                    var bustime = dropdowntime.selectedIndex;
+                    var destime = dropdowndest.selectedIndex;
+                    var csrfToken =  getCookie('csrftoken');
+                    if (date != ""){
 
+                        $.ajax({
+                            type : "POST",
+                            url : "../get_valid_seats/",
+                            data : {
+                                'csrfmiddlewaretoken': csrfToken,
+                                'date' : date,
+                                'time' : bustime,
+                                'dest' : destime
+                            },
+                            success : function (data) {
+                                {#alert(data);#}
+                                data = data.substring(1,data.length-1);
+                                data = data.split(", ");
+                                init(data);
+                                {#$("#show").addClass("hideClass");#}
+                                $("#bus").removeClass("hideClass");
+                            },
+                            error : function (e) {
+                                alert("Error : " + e.message );
+                            }
+                        })
+
+                    }
+                    else {
+                        alert("Please choose a date");
+                    }
                 }
+
+                var init = function (reservedSeat) {
+                    console.log(reservedSeat);
+                    var str = [], seatNo, className;
+                    for (var i = 0; i < settings.rows; i++) {
+                        for (var j = 0; j < settings.cols; j++) {
+                            seatNo = (i + j * settings.rows + 1);
+                            className = settings.seatCss + ' ' + settings.rowCssPrefix + i.toString() + ' ' + settings.colCssPrefix + j.toString();
+                            if ($.isArray(reservedSeat) && $.inArray(seatNo+"", reservedSeat) != -1) {
+                                className += ' ' + settings.selectedSeatCss;
+                            }
+                            str.push('<li class="' + className + '"' +
+                                      'style="top:' + (i * settings.seatHeight).toString() + 'px;left:' + (j * settings.seatWidth).toString() + 'px">' +
+                                      '<a title="' + seatNo + '">' + seatNo + '</a>' +
+                                      '</li>');
+                        }
+                    }
+                    $('#place').html(str.join(''));
+                };
 
                 </script>
                 <div id="bus" class="hideClass">

@@ -115,15 +115,55 @@
     <div class="col-md-10 col-md-offset-1 text-center">
       <div class="col-md-6 col-md-offset-3 conForm">
         <div id="message">Send Us a Message</div>
-        <form method="post" action="#" name="cform" id="cform">
+
           <input name="name" id="name" type="text" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" placeholder="Your name..." >
           <input name="email" id="email" type="email" class=" col-xs-12 col-sm-12 col-md-12 col-lg-12 noMarr" placeholder="Email Address..." >
           <textarea name="comments" id="comments" cols="" rows="" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" placeholder="Your Message..."></textarea>
-          <input type="submit" id="submit" name="send" class="submitBnt" value="Send">
+          <input type="submit"  id="submit" name="send" class="submitBnt" value="Send">
           <div id="simple-msg"></div>
-        </form>
+
       </div>
     </div>
   </div>
 </section>
+    <script>
+        $(document).on('click',"#submit",function() {
+            var name = document.getElementById("name").value;
+            var email = document.getElementById("email").value;
+            var message = document.getElementById("comments").value;
+            var csrfToken = getCookie('csrftoken');
+            x = message + " -- From : " + email;
+            $.ajax({
+                            type : "POST",
+                            url : "../sendmail/",
+                            data : {
+                                'csrfmiddlewaretoken': csrfToken,
+                                'name' : name,
+                                'body' : x
+                            },
+                            success : function (data) {
+                               alert("Success")
+                            },
+                            error : function (e) {
+                                alert("Error : " + e.message );
+                            }
+                        })
+        });
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
 {% endblock %}

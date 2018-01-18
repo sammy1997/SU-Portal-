@@ -16,6 +16,23 @@
       <a href="#" class="nav-toggle">Menu<span></span></a> </div>
   </header>
     <style>
+        @media only screen and (min-width: 800px){
+            #large-screen{
+                display: block;
+            }
+            #small-screen{
+                display: none;
+            }
+        }
+        @media only screen and (min-width: 150px) and (max-width: 800px){
+            #large-screen{
+                display: none;
+            }
+            #small-screen{
+                display: block;
+            }
+        }
+
         #table_container{
             width: 100%;
             display: flex;
@@ -58,37 +75,60 @@
     </div>
   </section>
 
-    <section>
-    <div id="table_container">
         {% if user.is_authenticated %}
-            <table id="cost">
-          <tr>
-            <th>Name</th>
-            <th>ID</th>
-            <th>Mess</th>
-            <th>Food King</th>
-            <th>ANC</th>
-            <th>Looters</th>
-            <th>Others</th>
-          </tr>
-          <tr>
-            <td>{{ cost.name }}</td>
-            <td>{{ cost.institute_id }}</td>
-            <td><strong>{{ cost.cost_list_mess }}</strong></td>
-            <td><strong>{{ cost.cost_list_fk }}</strong></td>
-            <td><strong>{{ cost.cost_list_anc }}</strong></td>
-            <td><strong>{{ cost.cost_list_looters }}</strong></td>
-            <td><strong>{{ cost.cost_list_others }}</strong></td>
-          </tr>
-        </table>
+        <section id="large-screen">
+            <div id="table_container">
+                <table id="cost">
+                      <tr>
+                        <th>Name</th>
+                        <th>ID</th>
+                        <th>Mess</th>
+                        <th>Food King</th>
+                        <th>ANC</th>
+                        <th>Looters</th>
+                        <th>Others</th>
+                      </tr>
+                      <tr>
+                        <td>{{ cost.name }}</td>
+                        <td>{{ cost.institute_id }}</td>
+                        <td><strong>{{ cost.cost_list_mess }}</strong></td>
+                        <td><strong>{{ cost.cost_list_fk }}</strong></td>
+                        <td><strong>{{ cost.cost_list_anc }}</strong></td>
+                        <td><strong>{{ cost.cost_list_looters }}</strong></td>
+                        <td><strong>{{ cost.cost_list_others }}</strong></td>
+                      </tr>
+                </table>
+            </div>
+
+        </section>
+        <section id="small-screen">
+            <div id="table_container">
+                <table id="cost">
+                      <tr>
+                        <th>Name</th>
+                        <th>Costs</th>
+                      </tr>
+                      <tr>
+                        <td>{{ cost.institute_id }}</td>
+                        <td><strong>Mess : &nbsp;</strong> {{ cost.cost_list_mess }}<br>
+                        <strong>ANC : &nbsp;</strong>{{ cost.cost_list_anc }}<br>
+                        <strong>Food King : &nbsp;</strong>{{ cost.cost_list_fk }}<br>
+                        <strong>Looters : &nbsp;</strong>{{ cost.cost_list_looters }}<br>
+                        <strong>Others : &nbsp;</strong>{{ cost.cost_list_others }}</td>
+
+                      </tr>
+                </table>
+            </div>
+
+        </section>
 
         {% else %}
 
-            <h2> Please Login First </h2>
+                <div style="width:100vw;text-align:center; margin-top: 10px">
+                    <h2> Please Login first</h2>
+                </div>
+
         {% endif %}
 
-    </div>
-
-    </section>
 
 {% endblock %}

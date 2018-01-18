@@ -1,5 +1,11 @@
 from django.contrib import admin
-from models import Cost,Bus
+from models import Cost, Bus
 # Register your models here.
-admin.site.register(Cost)
+
+
+class CostAdmin(admin.ModelAdmin):
+    search_fields = ['name', 'institute_id']
+
+
+admin.site.register(Cost, CostAdmin)
 admin.site.register(Bus)
