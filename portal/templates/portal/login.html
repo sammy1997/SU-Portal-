@@ -26,22 +26,158 @@
   </div>
 </section>
 
+    <script>
+        var OAUTHURL    =   'https://accounts.google.com/o/oauth2/auth?';
+        var VALIDURL    =   'https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=';
+        var SCOPE       =   'https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email';
+        var CLIENTID    =   '1067650213182-irqmc9tqabfv65sph0vbik8enmvuab19.apps.googleusercontent.com';
+        var REDIRECT    =   'http://127.0.0.1:8000/portal/login/';
+        var LOGOUT      =   'http://127.0.0.1:8000/portal/logout';
+        var TYPE        =   'token';
+        var _url        =   OAUTHURL + 'scope=' + SCOPE + '&client_id=' + CLIENTID + '&redirect_uri=' + REDIRECT + '&response_type=' + TYPE;
+        var acToken;
+        var tokenType;
+        var expiresIn;
+        var user;
+        var loggedIn    =   false;
+        window.onload = function (ev) {
+            $('.login_btn').show();
+            $('.logout').hide();
+            check();
+        };
+        function login() {
+            window.location=_url;
+        }
+        function check() {
+            try {
+                    console.log(window.document.URL);
+                    if(window.document.URL.toString().includes(REDIRECT+"#access_token")) {
+                        var url =   window.document.URL;
+                        acToken =   gup(url, 'access_token');
+                        tokenType = gup(url, 'token_type');
+                        expiresIn = gup(url, 'expires_in');
+                        //window.close();
+
+                        validateToken(acToken);
+                    }
+                } catch(e) {
+                    console.log("Validate " + e );
+                }
+        }
+
+        function validateToken(token) {
+            console.log("Validate");
+            $.ajax({
+                url: VALIDURL + token,
+                data: null,
+                success: function(responseText){
+                    console.log("Validate success");
+                    getUserInfo();
+                    loggedIn = true;
+                },
+                dataType: "jsonp"
+            });
+        }
+
+        function getUserInfo() {
+            $.ajax({
+                url: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=' + acToken,
+                data: null,
+                success: function(resp) {
+                    user    =   resp;
+                    createUser(user.email, user.id, user.picture, user.name);
+                },
+                dataType: "jsonp"
+            });
+        }
+
+
+        function createUser(email, id, picture,name) {
+
+                    console.log(email);
+                    console.log(id);
+                    console.log(picture);
+                    console.log(name);
+                    var csrftoken = getCookie('csrftoken');
+                    $.ajax({
+                        type: "POST",
+                        url: "../loginAuth/",
+                        data:{
+                            'csrfmiddlewaretoken': csrftoken,
+                            'email' : email,
+                            'password':id,
+                            'picture': picture,
+                            'name': name
+                        },
+                        success: function () {
+                            console.log("Success");
+                            $('.login_btn').hide();
+                            $('.logout').show();
+                        },
+                        error: function (e) {
+                            console.log("Token:" + csrftoken);
+                            console.log("Error" + e);
+                            $('.login_btn').hide();
+                            $('.logout').show();
+                        },
+                        dataType: "jsonp"
+                    });
+
+        }
+        //credits: http://www.netlobo.com/url_query_string_javascript.html
+        function gup(url, name) {
+            name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+            var regexS = "[\\#&]"+name+"=([^&#]*)";
+            var regex = new RegExp( regexS );
+            var results = regex.exec( url );
+            if( results == null )
+                return "";
+            else
+                return results[1];
+        }
+
+        function startLogoutPolling() {
+            console.log("Logout");
+            window.location= LOGOUT;
+            $('.login_btn').show();
+            $('.logout').hide();
+            loggedIn = false;
+        }
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+    </script>
 
 <section>
 <h1 style="font-size: 25px; text-align: center; width: 100%">Please use BITS mail to login</h1>
-{% if not user.is_authenticated %}
-<div id="auth_container">
+
+<div id="auth_container" class="login_btn">
     <div id="btn_wrapper">
         <div id="icon_google"></div>
-        <a id="button_oauth" href="{% url 'social:begin' 'google-oauth2' %}">Sign In</a>
+        <a id="button_oauth" onClick='login();' >Sign In</a>
     </div>
 </div>
-    {% else %}
-<div id="auth_container">
+
+    <div id="auth_container" class="logout">
 
     <div id="btn_wrapper">
         <div id="icon_google"></div>
-        <a id="button_oauth" href="{% url 'logout' %}">Logout</a>
+        <a id="button_oauth" href="#" target='myIFrame' onclick="myIFrame.location='https://www.google.com/accounts/logout'; startLogoutPolling();return false;">Logout</a>
+        <iframe name='myIFrame' id="myIFrame" style='display:none'></iframe>
     </div>
 
 <div>
@@ -49,6 +185,5 @@
 
   </div>
 </div>
-{% endif %}
 </section>
 {% endblock %}

@@ -1,0 +1,228 @@
+{% extends 'portal/base.html' %}
+{% block links %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'portal/css/timepicker.min.css' %}">
+{% endblock %}
+
+{% block javascripts %}
+    {% load staticfiles %}
+    <script type="text/javascript" src="{% static 'portal/js/timepicker.min.js' %}"></script>
+{% endblock %}
+{% block content %}
+    <section class="innerbanner" role="banner">
+      <header id="header">
+        <div class="header-content clearfix"> <a class="logo" href="{% url 'index' %}">SU Portal</a>
+          <nav class="navigation" role="navigation">
+            <ul class="primary-nav">
+              <li><a href="{% url 'index' %}">Home</a></li>
+              <li><a href="{% url 'services' %}">Services</a></li>
+              <li><a href="{% url 'cost' %}">Expenses</a></li>
+              <li><a href="{% url 'contact' %}">Contact</a></li>
+              <li><a href="{% url 'loginPage' %}">Login</a></li>
+              <li><a href="#">Other pages</a></li>
+            </ul>
+          </nav>
+          <a href="#" class="nav-toggle">Menu<span></span></a> </div>
+      </header>
+
+      <div class="container">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="innerbanner-text text-center">
+            <p>Cab Sharing</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    {% if user.is_authenticated %}
+    <style>
+        @media only screen and (min-width: 800px){
+            #large-screen{
+                display: block;
+            }
+            #small-screen{
+                display: none;
+            }
+        }
+        @media only screen and (min-width: 150px) and (max-width: 800px){
+            #large-screen{
+                display: none;
+            }
+            #small-screen{
+                display: block;
+            }
+        }
+
+        #table_container{
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #cost {
+            margin-top: 50px;
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 70%;
+        }
+
+        #cost td, #cost th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #cost tr:nth-child(even){background-color: #f2f2f2;}
+
+        #cost tr:hover {background-color: #ddd;}
+
+        #cost th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #52CBEE;
+            color: white;
+        }
+    </style>
+
+    <style>
+        .butn {
+            background-color: #52cbee;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+    #list{
+        display: none;
+    }
+    </style>
+    <script>
+        window.onload = function (ev) {
+            init()
+        };
+        function showAvailable() {
+            alert("Here");
+            var name = document.getElementById("name").value;
+            var date = document.getElementById("date-field").value;
+            var time = document.getElementById("time").value;
+            var contact = document.getElementById("contact").value;
+            var email = document.getElementById("email").value;
+            var csrftoken = getCookie('csrftoken');
+            $.ajax({
+                type:"POST",
+                url: "../cab_get/",
+                data: {
+                    'csrfmiddlewaretoken': csrftoken,
+                    'name':name,
+                    'date':date,
+                    'time':time,
+                    'contact':contact,
+                    'email': email
+                },
+                success: function(data){
+                    dataObj = eval('(' + data + ')');
+                    times = dataObj["times"];
+                    contacts = dataObj["contacts"];
+                    names = dataObj["names"];
+                    console.log(dataObj["times"]);
+                    var htmlContentSmall = "<tr><th>Time</th><th>Details</th></tr>";
+                    var htmlContentLarge = "<tr><th>Time</th><th>Name</th><th>Contact No.</th></tr>";
+                    for (var i=0;i < names.length;i++){
+                        time = times[i];
+                        name = names[i];
+                        contact = contacts[i];
+                        htmlContentLarge+="<tr><td>"+time+"</td><td>"+name+"</td><td>"+contact+"</td></tr>";
+                        htmlContentSmall+="<tr><td>"+time+"</td><td>"+name+"--"+contact+"</td></tr>";
+                        document.getElementsByClassName("large")[0].innerHTML=htmlContentLarge;
+                        document.getElementsByClassName("small")[0].innerHTML=htmlContentSmall;
+                    }
+                },
+                error:function (e) {
+                    console.log(e);
+                }
+            });
+            document.getElementById("list").style.display = "block";
+        }
+        function init(){
+            $('input.timepicker').timepicker({
+                timeFormat: 'h:mm p',
+                interval: 30,
+                minTime: '0',
+                maxTime: '11:59pm',
+                defaultTime: '11',
+                startTime: '0:00',
+                dynamic: false,
+                scrollbar:true
+            });
+        }
+
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    </script>
+    <section>
+        <div style="width: 98vw;text-align: center;margin-top: 10px">
+            <h3>Choose the date : </h3>
+            <input id="date-field" type="date" name="booking-day" max="2018-12-31" min="2018-01-31"
+                   style="margin-top: 20px;width: 140px;text-align: center;">
+        </div>
+        <div style="width: 98vw;text-align: center;margin-top: 10px">
+            <h3>Choose the time : </h3>
+            <input id="time" class="timepicker" style="width: 250px;text-align: center;">
+        </div>
+
+        <div style="width: 98vw;text-align: center;margin-top: 10px">
+            <h3>Contact No. : </h3>
+            <input id="contact" type="number" class="phone" style="width: 250px;text-align: center;">
+        </div>
+
+
+        <div style="width: 98vw;text-align: center;margin-top: 10px">
+            <h3>Name : </h3>
+            <input class="name" id="name" value="{{ user.first_name }}" style="width: 250px;text-align: center;">
+        </div>
+        <div style="width: 98vw;text-align: center;margin-top: 10px; display: none">
+            <h3>Name : </h3>
+            <input class="name" id="email" value="{{ user.email }}" style="width: 250px;text-align: center;">
+        </div>
+        <div style="width:98vw;text-align:center; margin-top: 10px" id="show">
+            <button onclick="showAvailable()" class="butn" id="btnShowCab">Submit</button>
+        </div>
+    </section>
+    <section id="list">
+            <section id="large-screen">
+            <div id="table_container">
+                <table id="cost" class="large">
+                </table>
+            </div>
+
+        </section>
+        <section id="small-screen">
+            <div id="table_container">
+                <table id="cost" class="small">
+                </table>
+            </div>
+
+        </section>
+    </section>
+
+    {% else %}
+        <h2 style="font-family: 'Roboto Slab'"> Please Login First </h2>
+    {% endif %}
+{% endblock %}

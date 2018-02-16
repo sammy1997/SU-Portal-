@@ -1,8 +1,20 @@
 from __future__ import unicode_literals
 from django.db import models
+from django.contrib.auth.models import User
+import datetime
+
+# class Bitsians(models.Model):
+#     name = models.CharField(max_length=50)
+#     email = models.CharField(max_length=40)
+#     pictureUrl = models.CharField(max_length=500)
+#     password = models.CharField(max_length=200)
+#
+#     def __unicode__(self):
+#         return "%s" % self.name
 
 
 class Cost(models.Model):
+    bitsian = models.ForeignKey(User, on_delete=models.CASCADE)
     institute_id = models.CharField(max_length=20)
     name = models.CharField(max_length=100)
     room_number = models.CharField(max_length=20)
@@ -29,3 +41,14 @@ class Bus(models.Model):
 
     def __unicode__(self):
         return "%s --- %s" % (self.seat_number, self.date_of_bus)
+
+
+class Taxi(models.Model):
+    date = models.DateField("Date", default=datetime.date.today)
+    time = models.CharField(max_length=20)
+    phone = models.CharField(max_length=11)
+    name = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
+
+    def __unicode__(self):
+        return "%s --- %s" % (self.name, self.phone)

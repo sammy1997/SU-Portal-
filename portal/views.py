@@ -1,9 +1,11 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, redirect
-from django.contrib.auth import views
-from portal.models import Cost, Bus
+from django.contrib import auth
+from portal.models import Cost, Bus, Taxi
 from xlrd import open_workbook
 from django.http import HttpResponse
 import json
+from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 import xlwt
 
@@ -22,7 +24,7 @@ def contact(request):
     return render(request, 'portal/contact.html')
 
 
-def services(request):
+def bus(request):
     current_user = request.user
     if current_user.is_authenticated:
         email = current_user.email
@@ -58,23 +60,34 @@ def services(request):
 
 
 def logout(request):
-    from django.contrib import auth
     auth.logout(request)
-    views.logout(request)
-    return render(request, 'portal/login.html')
+    return redirect('loginPage')
 
 
 def login(request):
-    views.login(request)
+    if request.method == 'POST':
+        username = request.POST['email']
+        password = request.POST['password']
+        try:
+            user = User.objects.get(username=username)
+            print("Hey")
+            auth.login(request, user)
+            return HttpResponse(user)
+        except ObjectDoesNotExist:
+            bitsian = User.objects.create(email=username, password=password, username=username, first_name=request.POST['name'])
+            auth.login(request, bitsian)
+            return HttpResponse(bitsian)
+    else:
+        return HttpResponse("Some Error occured")
 
 
 def login_page(request):
     return render(request, 'portal/login.html')
 
 
-def bus(request):
-    # return render(request, 'portal/bus.html')
-    return redirect('services')
+def services(request):
+    return render(request, 'portal/services.html')
+    # return redirect('services')
 
 
 def cost(request):
@@ -265,3 +278,39 @@ def export_bus_xls(request):
 
     wb.save(response)
     return response
+
+
+def cab(request):
+    return render(request, 'portal/cab.html')
+
+
+def cab_view(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        date = request.POST['date']
+        time = request.POST['time']
+        contact = request.POST['contact']
+        email = request.POST['email']
+        cab_user = None
+        time_arr = []
+        name_arr = []
+        contact_arr = []
+        count = 0
+        try:
+            cab_user = Taxi.objects.get(email=email)
+            cab_user.phone = contact
+            cab_user.date = date
+            cab_user.time = time
+            cab_user.save()
+        except ObjectDoesNotExist:
+            cab_user = Taxi.objects.create(email=email, name=name, date=date, phone=contact, time=time)
+        for x in Taxi.objects.all().filter(date=date):
+            time_arr.insert(count, x.time)
+            name_arr.insert(count, x.name)
+            contact_arr.insert(count, x.phone)
+            count = count+1
+        dict = json.dumps({'names': name_arr, 'contacts': contact_arr, 'times': time_arr})
+        print dict
+        return HttpResponse(dict)
+    else:
+        return HttpResponse("Not AJAX")

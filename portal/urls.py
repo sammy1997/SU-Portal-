@@ -2,6 +2,8 @@ from django.conf.urls import url, include
 from . import views
 
 urlpatterns = [
+    url(r'^cab_get/$', views.cab_view, name="cab_view"),
+    url(r'^cab/$', views.cab, name='cab'),
     url(r'^download_bus/$', views.export_bus_xls, name='download'),
     url(r'^$', views.index, name='index'),
     url(r'^bus/$', views.bus, name='bus'),

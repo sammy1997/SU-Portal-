@@ -1,4 +1,8 @@
 {% extends 'portal/base.html' %}
+{% block links%}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'portal/css/services.css' %}">
+{% endblock %}
 
 {% block content %}
 
@@ -27,44 +31,9 @@
     </div>
   </section>
 
-{#  <section>#}
-{#  <div class="container1">#}
-{#    <div class="card">#}
-{##}
-{#      <div class="front side">#}
-{#        <h1 class="logocard">Bus Service</h1>#}
-{#      </div>#}
-{##}
-{#      <div class="back side">#}
-{#        <h3 class="name">{{ user.email }}</h3>#}
-{#        <div>Book your own seat</div>#}
-{#        <div class="info">#}
-{#          <p><span class="property bigger">Website: </span><a href="{% url 'cost' %}">Click here</a></p>#}
-{#          <p><span class="property">Puli: </span>9999999999</p>#}
-{#          <p><span class="property">Jindal: </span>9999999999</p>#}
-{#        </div>#}
-{#      </div>#}
-{##}
-{#    </div>#}
-{#  </div>#}
-{#  <div class="container2">#}
-{#    <div class="card">#}
-{##}
-{#      <div class="front side">#}
-{#        <h1 class="logocard">Mess Bill</h1>#}
-{#      </div>#}
-{##}
-{#      <div class="back side">#}
-{#        <h3 class="name">Mess Bill</h3>#}
-{#        <div>Check your mess bill for last 15 days</div>#}
-{#        <div class="info">#}
-{#          <p><span class="property bigger">Website: </span><a href="#">Click here</a></p>#}
-{#          <p><span class="property">Puli: </span>9999999999</p>#}
-{#          <p><span class="property">Jindal: </span>9999999999</p>#}
-{#        </div>#}
-{#      </div>#}
-{##}
-{#    </div>#}
-{#  </div>#}
-{#  </section>#}
+  <section id="buttons">
+        <a class="button" href="{% url 'bus' %}" style="vertical-align:middle"><span>Bus Booking </span></a>
+        <a class="button" href="{% url 'cab' %}" style="vertical-align:middle"><span>Cab Sharing </span></a>
+  </section>
+
 {% endblock %}
