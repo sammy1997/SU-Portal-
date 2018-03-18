@@ -1,6 +1,75 @@
+#buttons{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+div.center {
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+}
+ol {
+    text-align: left;
+}
+.subjects li a{
+  color: #000;
+}
+
+.subjects{
+  margin-top: 40px;
+}
+.button {
+  font-family: "Roboto Slab";
+  display: inline-block;
+  border-radius: 4px;
+  background-color: #52cbee;
+  border: none;
+  text-decoration: none;
+  color: #FFFFFF;
+  text-align: center;
+  font-size: 28px;
+  padding: 20px;
+  width: 300px;
+  transition: all 0.5s;
+  cursor: pointer;
+  margin: 40px;
+}
+
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+  color: #ffffff;
+}
+.button:hover{
+  color: #ffffff;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
 #all_content{
     margin: 20px;
 }
+
+
 
 .lightbox{
     width: 75vw;

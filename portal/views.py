@@ -8,12 +8,13 @@ import json
 from django.contrib.auth.models import User
 from django.core.mail import EmailMessage
 import xlwt
+from django.conf import settings
 
-csv_file_path_looters = '/home/sammy/Desktop/SUTech/StudentUnionPortal/bill/looters.xlsx'
-csv_file_path_anc = '/home/sammy/Desktop/SUTech/StudentUnionPortal/bill/looters.xlsx'
-csv_file_path_fk = '/home/sammy/Desktop/SUTech/StudentUnionPortal/bill/looters.xlsx'
-csv_file_path_mess = '/home/sammy/Desktop/SUTech/StudentUnionPortal/bill/looters.xlsx'
-csv_file_path_others = '/home/sammy/Desktop/SUTech/StudentUnionPortal/bill/looters.xlsx'
+csv_file_path_looters = settings.MEDIA_ROOT +'/looters.xlsx'
+csv_file_path_anc = settings.MEDIA_ROOT +'/looters.xlsx'
+csv_file_path_fk = settings.MEDIA_ROOT +'/looters.xlsx'
+csv_file_path_mess = settings.MEDIA_ROOT +'/looters.xlsx'
+csv_file_path_others = settings.MEDIA_ROOT +'/looters.xlsx'
 
 
 def index(request):
@@ -23,6 +24,11 @@ def index(request):
 def contact(request):
     return render(request, 'portal/contact.html')
 
+def papers1(request):
+    return render(request, 'portal/papers1.html') 
+
+def papers2(request):
+    return render(request, 'portal/papers2.html')
 
 def bus(request):
     current_user = request.user
@@ -62,6 +68,9 @@ def bus(request):
 def logout(request):
     auth.logout(request)
     return redirect('loginPage')
+
+def resources(request):
+    return render(request,'portal/resources.html')
 
 
 def login(request):
@@ -111,6 +120,7 @@ def register_excel(request):
 
     for row_index in xrange(1, data_reader.nrows):
         costs = Cost()
+        # cost.bitsian = request.user
         costs.institute_id = data_reader.cell(row_index, 0).value
         x = data_reader.cell(row_index, 0).value
         costs.name = data_reader.cell(row_index, 1).value

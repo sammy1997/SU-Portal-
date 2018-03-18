@@ -14,7 +14,7 @@ import datetime
 
 
 class Cost(models.Model):
-    bitsian = models.ForeignKey(User, on_delete=models.CASCADE)
+    bitsian = models.ForeignKey(User, on_delete=models.CASCADE,blank=True,null=True , default=None)
     institute_id = models.CharField(max_length=20)
     name = models.CharField(max_length=100)
     room_number = models.CharField(max_length=20)

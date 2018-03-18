@@ -8,15 +8,15 @@
 
 <section class="banner" role="banner">
   <header id="header">
-    <div class="header-content clearfix"> <a class="logo" href="{% url 'index' %}">SU Portal</a>
+    <div class="header-content clearfix"> <a class="logo" href="{% url 'index' %}"> Students' Union</a>
       <nav class="navigation" role="navigation">
         <ul class="primary-nav">
-          <li><a href="{% url 'index' %}">Home</a></li>
+          <li><a href="{% url 'loginPage' %}">Home</a></li>
           <li><a href="{% url 'services' %}">Services</a></li>
           <li><a href="{% url 'cost' %}">Expenses</a></li>
           <li><a href="{% url 'contact' %}">Contact</a></li>
-          <li><a href="{% url 'loginPage' %}">Login</a></li>
-          <li><a href="#">Other pages</a></li>
+          <li><a href="{% url 'index' %}">Union Team</a></li>
+          <li><a href="{% url 'resources' %}">Resources</a></li>
         </ul>
       </nav>
       <a href="#" class="nav-toggle">Menu<span></span></a> </div>
@@ -48,111 +48,109 @@
 <section id="works" class="works section no-padding">
   <div class="container-fluid">
     <div class="row no-gutter">
-      <div class="col-lg-3 col-md-6 col-sm-6 work">
-          <a href="#puli" class="work-box">
-            <div style="display:none">
-                <div id="puli">Been There done that</div>
-            </div>
-
-            <img src="{% static 'portal/images/work-1.jpg' %}" alt="">
-
-            <div class="overlay">
-              <div class="overlay-caption">
-                <h5>Bharatratna Puli</h5>
-                <p>President , SU</p>
-              </div>
-            </div>
-          </a>
-      </div>
+ 
 
 
-        <div class="col-lg-3 col-md-6 col-sm-6 work">
-            <a href="#jindal" class="work-box">
+         <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="#puli" class="work-box">
                 <div style="display:none">
-                    <div id="jindal">Been There done that</div>
+                    <div id="puli" class="overlaybox">
+                        <h2>Manifest points covered:</h2>
+                        <br>
+                        1) Installation of insect blockers <br>
+                        2) Providing quilts<br>
+                        3) Mentorship for first years<br>
+                        4) Newspaper trays</div>
                 </div>
 
                 <img src="{% static 'portal/images/work-1.jpg' %}" alt="">
+
+                <div class="overlay">
+                    <div class="overlay-caption">
+                        <h5>Bharatratna Puli</h5>
+                        <p>President , SU</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+
+
+         <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="#shivam" class="work-box">
+                <div style="display:none">
+                    <div id="shivam" class="overlaybox">
+                        <h2>Manifest points covered:</h2>
+                        <br>
+                        1) Installation of insect blockers <br>
+                        2) Providing quilts<br>
+                        3) Mentorship for first years<br>
+                        4) Newspaper trays</div>
+                </div>
+
+                <img src="{% static 'portal/images/shivam.jpg' %}" alt="">
 
                 <div class="overlay">
                     <div class="overlay-caption">
                         <h5>Shivam Jindal</h5>
-                        <p>Gen Sec. , SU</p>
+                        <p>Gen Sec , SU</p>
                     </div>
                 </div>
             </a>
         </div>
 
 
+
+
+
+
         <div class="col-lg-3 col-md-6 col-sm-6 work">
-            <a href="#rai" class="work-box">
+            <a href="#satyansh" class="work-box">
                 <div style="display:none">
-                    <div id="rai">Been There done that</div>
+                    <div id="satyansh" class="overlaybox">
+                        <h2>Manifest points covered:</h2>
+                        <br>
+                        1) Installation of insect blockers <br>
+                        2) Providing quilts<br>
+                        3) Mentorship for first years<br>
+                        4) Newspaper trays</div>
                 </div>
 
-                <img src="{% static 'portal/images/work-1.jpg' %}" alt="">
+                <img src="{% static 'portal/images/satyansh.jpg' %}" alt="">
 
                 <div class="overlay">
                     <div class="overlay-caption">
                         <h5>Satyansh Rai</h5>
-                        <p>Budh H.Rep , SU</p>
+                        <p>BUDH H.Rep , SU</p>
                     </div>
                 </div>
             </a>
         </div>
-
-
-        <div class="col-lg-3 col-md-6 col-sm-6 work">
-            <a href="#beniwal" class="work-box">
-                <div style="display:none">
-                        <div id="beniwal" class="lightbox">
-                            <div id="all_content">
-                                <header>
-                                    <div class="heading">Manifest points covered:</div>
-                                </header>
-                                <div class="main_content" id="content">
-                                    <div class="text_content" id="content_text">
-                                        <br>
-                                        1) Installation of insect blockers <br>
-                                        2) Providing quilts<br>
-                                        3) Mentorship for first years<br>
-                                        4) Newspaper trays
-                                    </div>
-                                </div>
-                                <div class="extras" id="extra_part"></div>
-                            </div>
-                        </div>
-                </div>
-
-
-                <img src="{% static 'portal/images/work-1.jpg' %}" alt="">
-
-                <div class="overlay">
-                    <div class="overlay-caption">
-                        <h5>Imtieshwar Singh Beniwal</h5>
-                        <p>Ashoka H.Rep , SU</p>
-                    </div>
-                </div>
-            </a>
-        </div>
-
 
         <div class="col-lg-3 col-md-6 col-sm-6 work">
             <a href="#vardhan" class="work-box">
                 <div style="display:none">
-                    <div id="vardhan">Been There done that</div>
+                    <div id="vardhan" class="overlaybox">
+                        <h2>Manifest points covered:</h2>
+                        <br>
+                        1) Installation of insect blockers <br>
+                        2) Providing quilts<br>
+                        3) Mentorship for first years<br>
+                        4) Newspaper trays</div>
                 </div>
 
-                <img src="{% static 'portal/images/cvr.jpg' %}" alt="">
+                <img src="{% static 'portal/images/vk.jpg' %}" alt="">
 
                 <div class="overlay">
                     <div class="overlay-caption">
-                        <h5>Harsha Vardhan</h5>
+                        <h5>Harsh Vardhan</h5>
                         <p>CVR H.Rep , SU</p>
                     </div>
                 </div>
             </a>
         </div>
+
+
 
 
         <div class="col-lg-3 col-md-6 col-sm-6 work">
@@ -182,10 +180,15 @@
         <div class="col-lg-3 col-md-6 col-sm-6 work">
             <a href="#dutta" class="work-box">
                 <div style="display:none">
-                    <div id="dutta" class="overlaybox">Been There done that</div>
+                    <div id="dutta" class="overlaybox"><h2>Manifest points covered:</h2>
+                        <br>
+                        1) Installation of insect blockers <br>
+                        2) Providing quilts<br>
+                        3) Mentorship for first years<br>
+                        4) Newspaper trays</div>
                 </div>
 
-                <img src="{% static 'portal/images/work-1.jpg' %}" alt="">
+                <img src="{% static 'portal/images/sandeep.jpg' %}" alt="">
 
                 <div class="overlay">
                     <div class="overlay-caption">
@@ -207,16 +210,224 @@
                         3) washrooms maintenance</div>
                 </div>
 
-                <img src="{% static 'portal/images/work-1.jpg' %}" alt="">
+                <img src="{% static 'portal/images/chitra.jpg' %}" alt="">
 
                 <div class="overlay">
                     <div class="overlay-caption">
                         <h5>Chitra</h5>
-                        <p>Meera 1 H.Rep , SU</p>
+                        <p>MEERA 1 H.Rep , SU</p>
                     </div>
                 </div>
             </a>
         </div>
+
+
+
+
+
+        <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="#bothra" class="work-box">
+                <div style="display:none">
+                    <div id="bothra" class="overlaybox"><h2>Manifesto points covered:</h2>
+                        <br>
+                        1) check on dhobi and laundromat<br>
+                        2) stray dogs check<br>
+                        3) washrooms maintenance</div>
+                </div>
+
+                <img src="{% static 'portal/images/ayush.jpg' %}" alt="">
+
+                <div class="overlay">
+                    <div class="overlay-caption">
+                        <h5>Ayush Bothra</h5>
+                        <p>MAL H.Rep , SU</p>
+                    </div>
+                </div>
+            </a>
+        </div>  
+
+
+
+        <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="#kanupriya" class="work-box">
+                <div style="display:none">
+                    <div id="kanupriya" class="overlaybox"><h2>Manifesto points covered:</h2>
+                        <br>
+                        1) check on dhobi and laundromat<br>
+                        2) stray dogs check<br>
+                        3) washrooms maintenance</div>
+                </div>
+
+                <img src="{% static 'portal/images/kanupriya.jpg' %}" alt="">
+
+                <div class="overlay">
+                    <div class="overlay-caption">
+                        <h5>Kanupriya Sachdeva</h5>
+                        <p>MEERA 2 H.Rep , SU</p>
+                    </div>
+                </div>
+            </a>
+        </div> 
+
+
+
+        <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="#parth" class="work-box">
+                <div style="display:none">
+                    <div id="parth" class="overlaybox"><h2>Manifesto points covered:</h2>
+                        <br>
+                        1) check on dhobi and laundromat<br>
+                        2) stray dogs check<br>
+                        3) washrooms maintenance</div>
+                </div>
+
+                <img src="{% static 'portal/images/parth.jpg' %}" alt="">
+
+                <div class="overlay">
+                    <div class="overlay-caption">
+                        <h5>Parth Goyal</h5>
+                        <p>RAM H.Rep , SU</p>
+                    </div>
+                </div>
+            </a>
+        </div> 
+
+
+        <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="#arghae" class="work-box">
+                <div style="display:none">
+                    <div id="arghae" class="overlaybox"><h2>Manifesto points covered:</h2>
+                        <br>
+                        1) check on dhobi and laundromat<br>
+                        2) stray dogs check<br>
+                        3) washrooms maintenance</div>
+                </div>
+
+                <img src="{% static 'portal/images/arghae.jpg' %}" alt="">
+
+                <div class="overlay">
+                    <div class="overlay-caption">
+                        <h5>Arghae Singh</h5>
+                        <p>GANDHI H.Rep , SU</p>
+                    </div>
+                </div>
+            </a>
+        </div> 
+
+
+        <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="#uday" class="work-box">
+                <div style="display:none">
+                    <div id="uday" class="overlaybox"><h2>Manifesto points covered:</h2>
+                        <br>
+                        1) check on dhobi and laundromat<br>
+                        2) stray dogs check<br>
+                        3) washrooms maintenance</div>
+                </div>
+
+                <img src="{% static 'portal/images/uday.jpg' %}" alt="">
+
+                <div class="overlay">
+                    <div class="overlay-caption">
+                        <h5>Uday Raj Singh</h5>
+                        <p>SR-C,D H.Rep , SU</p>
+                    </div>
+                </div>
+            </a>
+        </div> 
+
+        <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="#akhand" class="work-box">
+                <div style="display:none">
+                    <div id="akhand" class="overlaybox"><h2>Manifesto points covered:</h2>
+                        <br>
+                        1) check on dhobi and laundromat<br>
+                        2) stray dogs check<br>
+                        3) washrooms maintenance</div>
+                </div>
+
+                <img src="{% static 'portal/images/akhand.jpg' %}" alt="">
+
+                <div class="overlay">
+                    <div class="overlay-caption">
+                        <h5>Akhand Pratap Singh</h5>
+                        <p>SR-A,B  SU</p>
+                    </div>
+                </div>
+            </a>
+        </div> 
+
+
+        <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="#anand" class="work-box">
+                <div style="display:none">
+                    <div id="anand" class="overlaybox"><h2>Manifesto points covered:</h2>
+                        <br>
+                        1) check on dhobi and laundromat<br>
+                        2) stray dogs check<br>
+                        3) washrooms maintenance</div>
+                </div>
+
+                <img src="{% static 'portal/images/anand.jpg' %}" alt="">
+
+                <div class="overlay">
+                    <div class="overlay-caption">
+                        <h5>Anand Chordiya</h5>
+                        <p>VYAS SU</p>
+                    </div>
+                </div>
+            </a>
+        </div> 
+
+
+
+        <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="#pranav" class="work-box">
+                <div style="display:none">
+                    <div id="pranav" class="overlaybox"><h2>Manifesto points covered:</h2>
+                        <br>
+                        1) check on dhobi and laundromat<br>
+                        2) stray dogs check<br>
+                        3) washrooms maintenance</div>
+                </div>
+
+                <img src="{% static 'portal/images/pranav1.jpg' %}" alt="">
+
+                <div class="overlay">
+                    <div class="overlay-caption">
+                        <h5>Pranav Singh Rathore</h5>
+                        <p>D-Rep  SU</p>
+                    </div>
+                </div>
+            </a>
+        </div> 
+
+
+
+
+        <div class="col-lg-3 col-md-6 col-sm-6 work">
+            <a href="#lohith" class="work-box">
+                <div style="display:none">
+                    <div id="lohith" class="overlaybox"><h2>Manifesto points covered:</h2>
+                        <br>
+                        1) check on dhobi and laundromat<br>
+                        2) stray dogs check<br>
+                        3) washrooms maintenance</div>
+                </div>
+
+                <img src="{% static 'portal/images/lohith.jpg' %}" alt="">
+
+                <div class="overlay">
+                    <div class="overlay-caption">
+                        <h5>Lohith</h5>
+                        <p>CVR H.Rep  SU</p>
+                    </div>
+                </div>
+            </a>
+        </div> 
+
+
+
 
     </div>
   </div>

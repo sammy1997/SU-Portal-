@@ -20,4 +20,8 @@ urlpatterns = [
     url(r'^cancelBus/$', views.cancel_bus, name="cancel"),
     url(r'^updateExcel/$',views.update_excel, name='update'),
     url(r'^auth/', include('social_django.urls', namespace='social')),
+    url(r'^resources/',views.resources,name='resources'),
+    url(r'^papers1/',views.papers1,name='papers1'),
+    url(r'^papers2/',views.papers2,name='papers2'),
+
 ]

@@ -1,0 +1,40 @@
+{% extends 'portal/base.html' %}
+{% block links %}
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'portal/css/overlay.css' %}">
+{% endblock %}
+{% block content %}
+        {% load staticfiles %}
+
+<section class="banner" role="banner">
+  <header id="header">
+    <div class="header-content clearfix"> <a class="logo" href="{% url 'index' %}"> Students' Union</a>
+      <nav class="navigation" role="navigation">
+        <ul class="primary-nav">
+          <li><a href="{% url 'loginPage' %}">Home</a></li>
+          <li><a href="{% url 'services' %}">Services</a></li>
+          <li><a href="{% url 'cost' %}">Expenses</a></li>
+          <li><a href="{% url 'contact' %}">Contact</a></li>
+          <li><a href="{% url 'index' %}">Union Team</a></li>
+          <li><a href="{% url 'resources' %}">Resources</a></li>
+        </ul>
+      </nav>
+      <a href="#" class="nav-toggle">Menu<span></span></a> </div>
+      </header>
+
+      <div class="container">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="banner-text text-center">
+            <h1>Resources</h1>
+            <p>Here are some resources for your exam</p>
+          </div>
+        </div>
+      </div>
+</section>
+  
+  <section id="buttons">
+        <a class="button" href="{% url 'papers1' %}" style="vertical-align:middle"><span>First Years </span></a>
+       
+  </section>
+{% endblock %}
+  
