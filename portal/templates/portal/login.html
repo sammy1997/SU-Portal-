@@ -6,12 +6,12 @@
     <div class="header-content clearfix"> <a class="logo" href="{% url 'index' %}">Students' Union</a>
       <nav class="navigation" role="navigation">
         <ul class="primary-nav">
-          <li><a href="{% url 'loginPage' %}">Home</a></li>
           <li><a href="{% url 'services' %}">Services</a></li>
           <li><a href="{% url 'cost' %}">Expenses</a></li>
           <li><a href="{% url 'contact' %}">Contact</a></li>
           <li><a href="{% url 'index' %}">Union Team</a></li>
           <li><a href="{% url 'resources' %}">Resources</a></li>
+          <li><a href="{% url 'loginPage' %}">Login</a></li>          
         </ul>
       </nav>
       <a href="#" class="nav-toggle">Menu<span></span></a> </div>
@@ -19,10 +19,8 @@
 
   <div class="container">
     <div class="col-md-10 col-md-offset-1">
-      <div class="banner-text text-center">
-        <h1><img style='height:210px;width:200px;' src="{% static 'portal/images/sulogo(1).png' %}"></h1>
-        <p>Welcome to the Student Union Portal<br></p2>
-          Scroll to see more</p>
+      <div class="innerbanner-text text-center">
+        <p>Login</p>
       </div>
     </div>
   </div>
@@ -43,8 +41,8 @@
         var user;
         var loggedIn    =   false;
         window.onload = function (ev) {
-            $('.login_btn').show();
-            $('.logout').hide();
+            // $('.login_btn').show();
+            // $('.logout').hide();
             check();
         };
         function login() {
@@ -113,14 +111,14 @@
                         },
                         success: function () {
                             console.log("Success");
-                            $('.login_btn').hide();
-                            $('.logout').show();
+                            // $('.login_btn').hide();
+                            // $('.logout').show();
                         },
                         error: function (e) {
                             console.log("Token:" + csrftoken);
                             console.log("Error" + e);
-                            $('.login_btn').hide();
-                            $('.logout').show();
+                            // $('.login_btn').hide();
+                            // $('.logout').show();
                         },
                         dataType: "jsonp"
                     });
@@ -141,8 +139,8 @@
         function startLogoutPolling() {
             console.log("Logout");
             window.location= LOGOUT;
-            $('.login_btn').show();
-            $('.logout').hide();
+            // $('.login_btn').show();
+            // $('.logout').hide();
             loggedIn = false;
         }
 
@@ -165,25 +163,25 @@
     </script>
 
 <section>
-<h1 style="font-size: 25px; text-align: center; width: 100%">Please use BITS mail to login</h1>
-
-<div id="auth_container" class="login_btn">
-    <div id="btn_wrapper">
-        <div id="icon_google"></div>
-        <a id="button_oauth" style='cursor: pointer;' onClick='login();' >Sign In</a>
+{% if not user.is_authenticated %}    
+    <h1 style="font-size: 25px; text-align: center; width: 100%">Please use BITS mail to login</h1>
+    <div id="auth_container" class="login_btn">
+        <div id="btn_wrapper">
+            <div id="icon_google"></div>
+            <a id="button_oauth" style='cursor: pointer;' onClick='login();' >Sign In</a>
+        </div>
     </div>
-</div>
+{% else %}
 
     <div id="auth_container" class="logout">
 
-    <div id="btn_wrapper">
-        <div id="icon_google"></div>
-        <a id="button_oauth" href="#" target='myIFrame' onclick="myIFrame.location='https://www.google.com/accounts/logout'; startLogoutPolling();return false;">Logout</a>
-        <iframe name='myIFrame' id="myIFrame" style='display:none'></iframe>
-    </div>
-
-<div>
-
+        <div id="btn_wrapper">
+            <div id="icon_google"></div>
+            <a id="button_oauth" href="#" target='myIFrame' onclick="myIFrame.location='https://www.google.com/accounts/logout'; startLogoutPolling();return false;">Logout</a>
+            <iframe name='myIFrame' id="myIFrame" style='display:none'></iframe>
+        </div>
+    <div>
+{% endif %}
 
   </div>
 </div>

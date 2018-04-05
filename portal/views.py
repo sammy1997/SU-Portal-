@@ -91,7 +91,8 @@ def login(request):
 
 
 def login_page(request):
-    return render(request, 'portal/login.html')
+    user = request.user
+    return render(request, 'portal/login.html',{"user":user})
 
 
 def services(request):
