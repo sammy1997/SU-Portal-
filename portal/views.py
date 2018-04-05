@@ -117,6 +117,10 @@ def cost(request):
 def register_excel(request):
 
     data_reader = open_workbook(csv_file_path_looters).sheet_by_index(0)
+    data_reader2 = open_workbook(csv_file_path_mess).sheet_by_index(0)
+    data_reader3 = open_workbook(csv_file_path_anc).sheet_by_index(0)
+    data_reader4 = open_workbook(csv_file_path_fk).sheet_by_index(0)
+    data_reader5 = open_workbook(csv_file_path_others).sheet_by_index(0)
 
     for row_index in xrange(1, data_reader.nrows):
         costs = Cost()
@@ -127,10 +131,10 @@ def register_excel(request):
         costs.room_number = data_reader.cell(row_index, 2).value
         costs.bhavan = data_reader.cell(row_index, 3).value
         costs.cost_list_looters = data_reader.cell(row_index, 4).value
-        costs.cost_list_anc = "-"
-        costs.cost_list_fk = "-"
-        costs.cost_list_mess = "-"
-        costs.cost_list_others = "-"
+        costs.cost_list_anc = data_reader3.cell(row_index, 4).value
+        costs.cost_list_fk = data_reader4.cell(row_index, 4).value
+        costs.cost_list_mess = data_reader2.cell(row_index, 4).value
+        costs.cost_list_others = data_reader5.cell(row_index, 4).value
         temp = x[:4]
         degree = x[4:5].lower()
         if degree != 'h' and degree != 'p':
@@ -216,13 +220,16 @@ def update_excel(request):
 
     for row_index in xrange(1, data_reader1.nrows):
         x = data_reader1.cell(row_index, 0).value
-        cost = Cost.objects.all().filter(institute_id=x)[0]
-        cost.cost_list_looters = data_reader1.cell(row_index, 4).value
-        cost.cost_list_mess = data_reader2.cell(row_index, 4).value
-        cost.cost_list_anc = data_reader3.cell(row_index, 4).value
-        cost.cost_list_fk = data_reader4.cell(row_index, 4).value
-        cost.cost_list_others = data_reader5.cell(row_index, 4).value
-        cost.save()
+        try:
+            cost = Cost.objects.all().filter(institute_id=x)[0]
+            cost.cost_list_looters = str(int(data_reader1.cell(row_index, 4).value) + int(cost.cost_list_looters)) 
+            cost.cost_list_mess = str(int(data_reader2.cell(row_index, 4).value) + int(cost.cost_list_mess))
+            cost.cost_list_anc = str(int(data_reader3.cell(row_index, 4).value) + int(cost.cost_list_anc))
+            cost.cost_list_fk = str(int(data_reader4.cell(row_index, 4).value) + int(cost.cost_list_fk))
+            cost.cost_list_others = str(int(data_reader5.cell(row_index, 4).value) + int(cost.cost_list_others))
+            cost.save()
+        except Exception as e:
+            print "ONError"
     return redirect('index')
 
 
