@@ -17,7 +17,7 @@ class Cost(models.Model):
     bitsian = models.ForeignKey(User, on_delete=models.CASCADE,blank=True,null=True , default=None)
     institute_id = models.CharField(max_length=20)
     name = models.CharField(max_length=100)
-    room_number = models.CharField(max_length=20)
+    room_number = models.IntegerField()
     bhavan = models.CharField(max_length=20)
     cost_list_looters = models.CharField(max_length=1000)
     cost_list_mess = models.CharField(max_length=1000)

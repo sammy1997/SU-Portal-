@@ -11,9 +11,9 @@ import xlwt
 from django.conf import settings
 
 csv_file_path_looters = settings.MEDIA_ROOT +'/looters.xlsx'
-csv_file_path_anc = settings.MEDIA_ROOT +'/looters.xlsx'
-csv_file_path_fk = settings.MEDIA_ROOT +'/looters.xlsx'
-csv_file_path_mess = settings.MEDIA_ROOT +'/looters.xlsx'
+csv_file_path_anc = settings.MEDIA_ROOT +'/ic.xlsx'
+csv_file_path_fk = settings.MEDIA_ROOT +'/fk.xlsx'
+csv_file_path_mess = settings.MEDIA_ROOT +'/mess.xlsx'
 csv_file_path_others = settings.MEDIA_ROOT +'/looters.xlsx'
 
 
@@ -121,13 +121,13 @@ def register_excel(request):
     # data_reader4 = open_workbook(csv_file_path_fk).sheet_by_index(0)
     # data_reader5 = open_workbook(csv_file_path_others).sheet_by_index(0)
 
-    for row_index in xrange(1, data_reader.nrows):
+    for row_index in xrange(1, data_reader.nrows-1):
         costs = Cost()
         # cost.bitsian = request.user
         costs.institute_id = data_reader.cell(row_index, 0).value
         x = data_reader.cell(row_index, 0).value
         costs.name = data_reader.cell(row_index, 1).value
-        costs.room_number = data_reader.cell(row_index, 2).value
+        costs.room_number = int(data_reader.cell(row_index, 2).value)
         costs.bhavan = data_reader.cell(row_index, 3).value
         costs.cost_list_looters = data_reader.cell(row_index, 4).value
         costs.cost_list_anc = "0"
@@ -150,52 +150,124 @@ def register_excel(request):
     register_excel_anc()
     register_excel_fk()
     register_excel_mess()
-    register_excel_others()
+    # register_excel_others()
     return redirect('index')
 
 def register_excel_anc():
     data_reader = open_workbook(csv_file_path_anc).sheet_by_index(0)
-    for row_index in xrange(1, data_reader.nrows):
+    for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
         try:
             cost = Cost.objects.get(institute_id=idno)
-            cost.cost_list_anc = data_reader.cell(row_index, 4).value
+            cost.cost_list_anc = data_reader.cell(row_index, 2).value
             cost.save()
         except Exception as e:
             pass
 
 def register_excel_fk():
     data_reader = open_workbook(csv_file_path_fk).sheet_by_index(0)
-    for row_index in xrange(1, data_reader.nrows):
+    for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
         try:
             cost = Cost.objects.get(institute_id=idno)
             cost.cost_list_fk = data_reader.cell(row_index, 4).value
             cost.save()
-        except Exception as e:
-            pass
+        except ObjectDoesNotExist:
+            costs = Cost()
+            # cost.bitsian = request.user
+            costs.institute_id = data_reader.cell(row_index, 0).value
+            x = data_reader.cell(row_index, 0).value
+            costs.name = data_reader.cell(row_index, 1).value
+            costs.room_number = int(data_reader.cell(row_index, 2).value)
+            costs.bhavan = data_reader.cell(row_index, 3).value
+            costs.cost_list_looters = "0"
+            costs.cost_list_anc = "0"
+            costs.cost_list_fk = data_reader.cell(row_index, 4).value
+            costs.cost_list_mess = "0"
+            costs.cost_list_others = "0"
+            temp = x[:4]
+            degree = x[4:5].lower()
+            if degree != 'h' and degree != 'p':
+                degree = 'f'
+
+            if temp == '2017':
+                temp = degree + '2017' + x[-4:] + '@pilani.bits-pilani.ac.in'
+
+            else:
+                temp = degree + temp + x[-3:] + '@pilani.bits-pilani.ac.in'
+
+            costs.email = temp
+            costs.save()
 
 def register_excel_mess():
     data_reader = open_workbook(csv_file_path_mess).sheet_by_index(0)
-    for row_index in xrange(1, data_reader.nrows):
+    for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
         try:
             cost = Cost.objects.get(institute_id=idno)
             cost.cost_list_mess = data_reader.cell(row_index, 4).value
             cost.save()
-        except Exception as e:
-            pass
+        except ObjectDoesNotExist:
+            costs = Cost()
+            # cost.bitsian = request.user
+            costs.institute_id = data_reader.cell(row_index, 0).value
+            x = data_reader.cell(row_index, 0).value
+            costs.name = data_reader.cell(row_index, 1).value
+            costs.room_number = int(data_reader.cell(row_index, 2).value)
+            costs.bhavan = data_reader.cell(row_index, 3).value
+            costs.cost_list_looters = "0"
+            costs.cost_list_anc = "0"
+            costs.cost_list_fk = "0"
+            costs.cost_list_mess = data_reader.cell(row_index, 4).value
+            costs.cost_list_others = "0"
+            temp = x[:4]
+            degree = x[4:5].lower()
+            if degree != 'h' and degree != 'p':
+                degree = 'f'
+
+            if temp == '2017':
+                temp = degree + '2017' + x[-4:] + '@pilani.bits-pilani.ac.in'
+
+            else:
+                temp = degree + temp + x[-3:] + '@pilani.bits-pilani.ac.in'
+
+            costs.email = temp
+            costs.save()
 
 def register_excel_others():
     data_reader = open_workbook(csv_file_path_others).sheet_by_index(0)
-    for row_index in xrange(1, data_reader.nrows):
+    for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
         try:
             cost = Cost.objects.get(institute_id=idno)
             cost.cost_list_others = data_reader.cell(row_index, 4).value
             cost.save()
-        except Exception as e:
-            pass
+        except ObjectDoesNotExist:
+            costs = Cost()
+            # cost.bitsian = request.user
+            costs.institute_id = data_reader.cell(row_index, 0).value
+            x = data_reader.cell(row_index, 0).value
+            costs.name = data_reader.cell(row_index, 1).value
+            costs.room_number = int(data_reader.cell(row_index, 2).value)
+            costs.bhavan = data_reader.cell(row_index, 3).value
+            costs.cost_list_looters = "0"
+            costs.cost_list_anc = "0"
+            costs.cost_list_fk = "0"
+            costs.cost_list_mess = "0"
+            costs.cost_list_others =data_reader.cell(row_index, 4).value
+            temp = x[:4]
+            degree = x[4:5].lower()
+            if degree != 'h' and degree != 'p':
+                degree = 'f'
+
+            if temp == '2017':
+                temp = degree + '2017' + x[-4:] + '@pilani.bits-pilani.ac.in'
+
+            else:
+                temp = degree + temp + x[-3:] + '@pilani.bits-pilani.ac.in'
+
+            costs.email = temp
+            costs.save()
 
 def update_excel(request):
     data_reader1 = open_workbook(csv_file_path_looters).sheet_by_index(0)
@@ -204,11 +276,11 @@ def update_excel(request):
     # data_reader4 = open_workbook(csv_file_path_fk).sheet_by_index(0)
     # data_reader5 = open_workbook(csv_file_path_others).sheet_by_index(0)
 
-    for row_index in xrange(1, data_reader1.nrows):
+    for row_index in xrange(1, data_reader1.nrows-1):
         x = data_reader1.cell(row_index, 0).value
         try:
             cost = Cost.objects.get(institute_id=x)
-            cost.cost_list_looters = str(int(data_reader1.cell(row_index, 4).value) + int(cost.cost_list_looters))
+            cost.cost_list_looters = str(float(data_reader1.cell(row_index, 4).value) + float(cost.cost_list_looters))
             # cost.cost_list_mess = str(int(data_reader2.cell(row_index, 4).value) + int(cost.cost_list_mess))
             # cost.cost_list_anc = str(int(data_reader3.cell(row_index, 4).value) + int(cost.cost_list_anc))
             # cost.cost_list_fk = str(int(data_reader4.cell(row_index, 4).value) + int(cost.cost_list_fk))
@@ -224,44 +296,44 @@ def update_excel(request):
 
 def update_excel_anc():
     data_reader = open_workbook(csv_file_path_anc).sheet_by_index(0)
-    for row_index in xrange(1, data_reader.nrows):
+    for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
         try:
             cost = Cost.objects.get(institute_id=idno)
-            cost.cost_list_anc = str(int(data_reader.cell(row_index, 4).value) + int(cost.cost_list_anc))
+            cost.cost_list_anc = str(float(data_reader.cell(row_index, 4).value) + float(cost.cost_list_anc))
             cost.save()
         except Exception as e:
             pass
 
 def update_excel_fk():
     data_reader = open_workbook(csv_file_path_fk).sheet_by_index(0)
-    for row_index in xrange(1, data_reader.nrows):
+    for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
         try:
             cost = Cost.objects.get(institute_id=idno)
-            cost.cost_list_fk = str(int(data_reader.cell(row_index, 4).value) + int(cost.cost_list_fk))
+            cost.cost_list_fk = str(float(data_reader.cell(row_index, 4).value) + float(cost.cost_list_fk))
             cost.save()
         except Exception as e:
             pass
 
 def update_excel_mess():
     data_reader = open_workbook(csv_file_path_mess).sheet_by_index(0)
-    for row_index in xrange(1, data_reader.nrows):
+    for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
         try:
             cost = Cost.objects.get(institute_id=idno)
-            cost.cost_list_mess = str(int(data_reader.cell(row_index, 4).value) + int(cost.cost_list_mess))
+            cost.cost_list_mess = str(float(data_reader.cell(row_index, 4).value) + float(cost.cost_list_mess))
             cost.save()
         except Exception as e:
             pass
 
 def update_excel_others():
     data_reader = open_workbook(csv_file_path_others).sheet_by_index(0)
-    for row_index in xrange(1, data_reader.nrows):
+    for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
         try:
             cost = Cost.objects.get(institute_id=idno)
-            cost.cost_list_others = str(int(data_reader.cell(row_index, 4).value) + int(cost.cost_list_anc))
+            cost.cost_list_others = str(float(data_reader.cell(row_index, 4).value) + float(cost.cost_list_anc))
             cost.save()
         except Exception as e:
             pass
