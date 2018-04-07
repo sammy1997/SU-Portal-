@@ -300,7 +300,7 @@ def update_excel_anc(request):
         idno = data_reader.cell(row_index, 0).value
         try:
             cost = Cost.objects.get(institute_id=idno)
-            cost.cost_list_anc = str(float(data_reader.cell(row_index, 4).value) + float(cost.cost_list_anc))
+            cost.cost_list_anc = str(float(data_reader.cell(row_index, 2).value) + float(cost.cost_list_anc))
             cost.save()
         except Exception as e:
             pass
