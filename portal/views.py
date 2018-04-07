@@ -10,10 +10,10 @@ from django.core.mail import EmailMessage
 import xlwt
 from django.conf import settings
 
-csv_file_path_looters = settings.MEDIA_ROOT +'/looters.xlsx'
+csv_file_path_looters = settings.MEDIA_ROOT +'/looters2.xlsx'
 csv_file_path_anc = settings.MEDIA_ROOT +'/ic.xlsx'
-csv_file_path_fk = settings.MEDIA_ROOT +'/fk.xlsx'
-csv_file_path_mess = settings.MEDIA_ROOT +'/mess.xlsx'
+csv_file_path_fk = settings.MEDIA_ROOT +'/fk1.xlsx'
+csv_file_path_mess = settings.MEDIA_ROOT +'/mess1.xlsx'
 csv_file_path_others = settings.MEDIA_ROOT +'/looters.xlsx'
 
 
@@ -147,13 +147,13 @@ def register_excel(request):
 
         costs.email = temp
         costs.save()
-    register_excel_anc()
-    register_excel_fk()
-    register_excel_mess()
+    # register_excel_anc()
+    # register_excel_fk()
+    # register_excel_mess()
     # register_excel_others()
     return redirect('index')
 
-def register_excel_anc():
+def register_excel_anc(request):
     data_reader = open_workbook(csv_file_path_anc).sheet_by_index(0)
     for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
@@ -164,7 +164,7 @@ def register_excel_anc():
         except Exception as e:
             pass
 
-def register_excel_fk():
+def register_excel_fk(request):
     data_reader = open_workbook(csv_file_path_fk).sheet_by_index(0)
     for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
@@ -199,7 +199,7 @@ def register_excel_fk():
             costs.email = temp
             costs.save()
 
-def register_excel_mess():
+def register_excel_mess(request):
     data_reader = open_workbook(csv_file_path_mess).sheet_by_index(0)
     for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
@@ -234,7 +234,7 @@ def register_excel_mess():
             costs.email = temp
             costs.save()
 
-def register_excel_others():
+def register_excel_others(request):
     data_reader = open_workbook(csv_file_path_others).sheet_by_index(0)
     for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
@@ -288,13 +288,13 @@ def update_excel(request):
             cost.save()
         except Exception as e:
             print "ONError"
-    update_excel_fk()
-    update_excel_anc()
-    update_excel_mess()
-    update_excel_others()
+    # update_excel_fk()
+    # update_excel_anc()
+    # update_excel_mess()
+    # update_excel_others()
     return redirect('index')
 
-def update_excel_anc():
+def update_excel_anc(request):
     data_reader = open_workbook(csv_file_path_anc).sheet_by_index(0)
     for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
@@ -305,10 +305,10 @@ def update_excel_anc():
         except Exception as e:
             pass
 
-def update_excel_fk():
+def update_excel_fk(request):
     data_reader = open_workbook(csv_file_path_fk).sheet_by_index(0)
     for row_index in xrange(1, data_reader.nrows-1):
-        idno = data_reader.cell(row_index, 0).value
+        idno = data_reader.cell(row_index, 0).values_list
         try:
             cost = Cost.objects.get(institute_id=idno)
             cost.cost_list_fk = str(float(data_reader.cell(row_index, 4).value) + float(cost.cost_list_fk))
@@ -316,7 +316,7 @@ def update_excel_fk():
         except Exception as e:
             pass
 
-def update_excel_mess():
+def update_excel_mess(request):
     data_reader = open_workbook(csv_file_path_mess).sheet_by_index(0)
     for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
@@ -327,7 +327,7 @@ def update_excel_mess():
         except Exception as e:
             pass
 
-def update_excel_others():
+def update_excel_others(request):
     data_reader = open_workbook(csv_file_path_others).sheet_by_index(0)
     for row_index in xrange(1, data_reader.nrows-1):
         idno = data_reader.cell(row_index, 0).value
